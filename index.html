@@ -69,7 +69,6 @@
 
     section { padding: 70px 20px; text-align: center; }
 
-    /* Profil rasm */
     #profile img {
       width: 170px;
       height: 170px;
@@ -79,55 +78,54 @@
       margin-bottom: 15px;
     }
 
-    /* Slider */
-    .slider-container {
-      position: relative;
-      width: 90%;
-      max-width: 750px;
+    /* Portfolio Card Grid */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      max-width: 950px;
       margin: auto;
-      overflow: hidden;
     }
 
-    .slider {
-      display: flex;
-      transition: transform 0.4s ease;
-    }
-
-    .slide {
-      min-width: 100%;
-      background:#111;
+    .project-card {
+      background: #111;
       border: 2px solid #c400ff;
       border-radius: 12px;
-      padding: 40px 20px;
       box-shadow: 0 0 18px #c400ff44;
+      overflow: hidden;
+      transition: .35s;
     }
 
-    .slide-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background:#c400ff;
-      border:none;
-      color:#fff;
-      font-size:26px;
-      padding: 6px 14px;
-      border-radius: 50%;
-      cursor:pointer;
-      transition: .3s;
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 35px #c400ffaa;
     }
 
-    .slide-btn:hover { box-shadow: 0 0 12px #c400ff, 0 0 24px #c400ff; }
-
-    .prev { left: -15px; }
-    .next { right: -15px; }
-
-    @media(max-width:600px){
-      header { font-size: 18px; }
-      .prev, .next { top: 90%; }
+    .project-card:hover img {
+      transform: scale(1.07);
     }
+
+    .project-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-bottom: 2px solid #c400ff;
+      transition: transform .4s ease;
+    }
+
+    .project-card h3 {
+      color: #c400ff;
+      margin-top: 15px;
+    }
+
+    .project-card p {
+      font-size: 15px;
+      opacity: 0.8;
+      padding: 0 12px 18px 12px;
+    }
+
   </style>
 </head>
-
 <body>
 
 <header>
@@ -173,25 +171,40 @@
 <section id="portfolio" class="fade-in">
   <h2 style="text-shadow: 0 0 10px #c400ff;">Portfolio</h2>
 
-  <div class="slider-container">
-    <button class="slide-btn prev">&#10094;</button>
+  <div class="portfolio-grid">
 
-    <div class="slider">
-      <div class="slide">
-        <h3 style="color:#c400ff;">Portfolio Sayt</h3>
-        <p>HTML, CSS va JavaScript asosida qurilgan shaxsiy veb sayt.</p>
-      </div>
-      <div class="slide">
-        <h3 style="color:#c400ff;">AI Chat Bot</h3>
-        <p>Oddiy chatbot modeli bilan suhbatlashish loyihasi.</p>
-      </div>
-      <div class="slide">
-        <h3 style="color:#c400ff;">Kalkulyator App</h3>
-        <p>JavaScript asosida tuzilgan funksional kalkulyator.</p>
-      </div>
+    <div class="project-card">
+      <img src="https://picsum.photos/400/200?random=10" alt="Kalkulyator">
+      <h3>Kalkulyator</h3>
+      <p>JavaScript asosida tuzilgan interaktiv kalkulyator loyihasi.</p>
     </div>
 
-    <button class="slide-btn next">&#10095;</button>
+    <div class="project-card">
+      <img src="https://picsum.photos/400/200?random=11" alt="AI Bot">
+      <h3>AI Bot</h3>
+      <p>Simplified sun'iy intellekt chatbot bilan suhbatlashish.</p>
+    </div>
+
+    <div class="project-card">
+      <img src="https://picsum.photos/400/200?random=12" alt="O'yin">
+      <h3>O‘yin</h3>
+      <p>HTML, CSS va JavaScript yordamida yaratilgan mini o‘yin.</p>
+    </div>
+
+  </div>
+
+    <div class="project-card">
+      <img src="https://picsum.photos/400/200?random=2" alt="Project 2">
+      <h3>AI Chat Bot</h3>
+      <p>Oddiy chatbot modeli bilan suhbatlashish loyihasi.</p>
+    </div>
+
+    <div class="project-card">
+      <img src="https://picsum.photos/400/200?random=3" alt="Project 3">
+      <h3>Kalkulyator App</h3>
+      <p>JavaScript asosida tuzilgan funksional kalkulyator.</p>
+    </div>
+
   </div>
 </section>
 
@@ -202,23 +215,8 @@
 </section>
 
 <script>
-let index = 0;
-const slides = document.querySelector(".slider");
-
-document.querySelector(".next").onclick = () => {
-  index = (index + 1) % 3;
-  slides.style.transform = `translateX(-${index * 100}%)`;
-};
-
-document.querySelector(".prev").onclick = () => {
-  index = (index - 1 + 3) % 3;
-  slides.style.transform = `translateX(-${index * 100}%)`;
-};
-
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add("show");
-  });
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("show"); });
 });
 document.querySelectorAll(".fade-in").forEach(sec => observer.observe(sec));
 </script>
