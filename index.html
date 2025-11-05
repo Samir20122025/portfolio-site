@@ -287,6 +287,22 @@
       </div>
     </div>
 
+    <div id="calculatorModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; backdrop-filter: blur(8px); background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000;">
+      <div style="width:80%; max-width:600px; background:#111; border-radius:12px; padding:20px; position:relative;">
+        <button id="closeCalculator" style="position:absolute; top:10px; right:10px; background:#c400ff; border:none; border-radius:50%; width:30px; height:30px; color:#000; cursor:pointer;">X</button>
+        <iframe src="demo_cal.html" style="width:100%; height:400px; border:none; border-radius:12px;"></iframe>
+      </div>
+    </div>
+
+    <script>
+      const modal = document.getElementById('calculatorModal');
+      const openBtn = document.getElementById('openCalculator');
+      const closeBtn = document.getElementById('closeCalculator');
+
+      openBtn.onclick = () => { modal.style.display = 'flex'; }
+      closeBtn.onclick = () => { modal.style.display = 'none'; }
+    </script>
+
     <div class="project-card">
       <img src="ai-bot.png" alt="AI Bot Project">
       <h3>AI Bot</h3>
