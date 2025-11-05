@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculator Demo</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Poppins, Arial, sans-serif; }
+    body { display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #111, #444); }
+
+    .back-btn {
+      position: absolute; top: 20px; left: 20px;
+      padding: 8px 18px; background: #c400ff; color: #fff;
+      border-radius: 8px; text-decoration: none; transition: .3s;
+    }
+    .back-btn:hover { background: #d342ff; }
+
+    .calc { background: #222; padding: 25px; border-radius: 15px; width: 320px; box-shadow: 0 0 25px #c400ff55; }
+
+    .display { background: #000; width: 100%; padding: 20px; border-radius: 10px; color: #0f0; font-size: 32px; text-align: right; margin-bottom: 20px; }
+
+    .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    button { padding: 18px; border: none; border-radius: 12px; font-size: 20px; cursor: pointer; background: #333; color: white; transition: .2s; }
+    button:hover { background: #555; transform: scale(1.06); }
+
+    .op { background: #c400ff; }
+    .op:hover { background: #e44fff; }
+
+    .equal { background: #00c853; grid-column: span 2; }
+    .equal:hover { background: #00e06f; }
+  </style>
+</head>
+
+<body>
+
+<a href="index.html" class="back-btn">⬅ Orqaga</a>
+
+<div class="calc">
+  <div id="screen" class="display">0</div>
+  <div class="buttons">
+    <button onclick="clearScreen()">C</button>
+    <button onclick="delChar()">⌫</button>
+    <button class="op" onclick="addOp('/')">÷</button>
+    <button class="op" onclick="addOp('*')">×</button>
+
+    <button onclick="addNum(7)">7</button>
+    <button onclick="addNum(8)">8</button>
+    <button onclick="addNum(9)">9</button>
+    <button class="op" onclick="addOp('-')">−</button>
+
+    <button onclick="addNum(4)">4</button>
+    <button onclick="addNum(5)">5</button>
+    <button onclick="addNum(6)">6</button>
+    <button class="op" onclick="addOp('+')">+</button>
+
+    <button onclick="addNum(1)">1</button>
+    <button onclick="addNum(2)">2</button>
+    <button onclick="addNum(3)">3</button>
+    <button onclick="addNum('.')">.</button>
+
+    <button onclick="addNum(0)">0</button>
+    <button class="equal" onclick="calc()">=</button>
+  </div>
+</div>
+
+<script>
+let screen=document.getElementById("screen");
+function addNum(n){ screen.innerText === "0" ? screen.innerText=n : screen.innerText+=n; }
+function addOp(op){ screen.innerText+=op; }
+function clearScreen(){ screen.innerText="0"; }
+function delChar(){ screen.innerText = screen.innerText.slice(0,-1) || "0"; }
+function calc(){ try{ screen.innerText=eval(screen.innerText); } catch{ screen.innerText="Xato"; } }
+</script>
+
+</body>
+</html>
