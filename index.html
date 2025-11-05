@@ -20,6 +20,26 @@
       background: #0d0d0d;
       color: #c400ff;
       text-shadow: 0 0 18px #c400ff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 300%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, #c400ff44, transparent);
+      animation: headerGlow 6s infinite linear;
+      filter: blur(28px);
+    }
+
+    @keyframes headerGlow {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(0%); }
+      100% { transform: translateX(100%); }
     }
 
     nav {
@@ -57,16 +77,6 @@
 
     nav a:hover::after { width: 100%; }
 
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: .8s;
-    }
-    .fade-in.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     section { padding: 70px 20px; text-align: center; }
 
     #profile img {
@@ -98,10 +108,6 @@
     .project-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 0 35px #c400ffaa;
-    }
-
-    .project-card:hover img {
-      transform: scale(1.07);
     }
 
     .project-card img {
@@ -146,115 +152,43 @@
       box-shadow:0 0 12px #c400ff;
     }
 
-  @media (max-width: 600px) {
-    nav { gap: 18px; }
-    #profile img { width: 130px; height: 130px; }
-    .portfolio-grid { gap: 18px; }
-    .project-card p { font-size: 14px; }
-  }
+    @media (max-width: 600px) {
+      nav { gap: 18px; }
+      #profile img { width: 130px; height: 130px; }
+      .portfolio-grid { gap: 18px; }
+      .project-card p { font-size: 14px; }
+    }
 
-.light-mode body {
-  background:#fff;
-  color:#000;
-}
-.light-mode header,
-.light-mode nav {
-  background:#eaeaea;
-  color:#000;
-  text-shadow:none;
-}
-.light-mode a,
-.light-mode h2,
-.light-mode h3 {
-  color:#7a00aa !important;
-}
-.light-mode section {
-  background: rgba(255, 255, 255, 0.4) !important;
-  color: #000 !important;
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-}
+    .light-mode body { background:#fff; color:#000; }
+    .light-mode header, .light-mode nav { background:#eaeaea; color:#000; text-shadow:none; }
+    .light-mode a, .light-mode h2, .light-mode h3 { color:#7a00aa !important; }
+    .light-mode section { background: rgba(255, 255, 255, 0.4) !important; color: #000 !important; backdrop-filter: blur(12px); border-radius: 12px; }
+    .light-mode .project-card { background: rgba(255, 255, 255, 0.45) !important; border: 1px solid rgba(0,0,0,0.15) !important; box-shadow: none !important; }
+    .light-mode .theme-toggle { background: rgba(255,255,255,0.45); border:1px solid #7a00c8; color:#7a00c8; }
 
-.light-mode .project-card {
-  background: rgba(255, 255, 255, 0.45) !important;
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  box-shadow: none !important;
-}
+    .theme-toggle {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      padding: 10px 14px;
+      border-radius: 50%;
+      border: 1px solid #c400ff;
+      background: rgba(20,20,20,0.45);
+      backdrop-filter: blur(10px);
+      color: #c400ff;
+      cursor: pointer;
+      transition: .3s;
+      z-index: 999;
+    }
 
-.light-mode nav a,
-.light-mode h2,
-.light-mode h1 {
-  color: #7a00c8 !important;
-}
-
-.theme-toggle {
-  position: fixed;
-  right: 20px;
-  top: 20px;
-  padding: 10px 14px;
-  border-radius: 50%;
-  border: 1px solid #c400ff;
-  background: rgba(20, 20, 20, 0.45);
-  backdrop-filter: blur(10px);
-  color: #c400ff;
-  cursor: pointer;
-  transition: .3s;
-  z-index: 999;
-}
-
-.theme-toggle:hover {
-  box-shadow: 0 0 18px #c400ff, 0 0 32px #c400ff;
-  transform: scale(1.1);
-}
-
-.light-mode .theme-toggle {
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid #7a00c8;
-  color: #7a00c8;
-}
-
-@keyframes headerGlow {
- 0% { transform: translateX(-100%); }
- 50% { transform: translateX(0%); }
- 100% { transform: translateX(100%); }
-}
-
-header {
- position: relative;
- overflow: hidden;
-}
-
-header::before {
- content: "";
- position: absolute;
- top: 0;
- left: -150%;
- width: 300%;
- height: 100%;
- background: linear-gradient(120deg, transparent, #c400ff44, transparent);
- animation: headerGlow 6s infinite linear;
- filter: blur(28px);
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
-}
-
-.reveal.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-</style>
+    .theme-toggle:hover { box-shadow: 0 0 18px #c400ff, 0 0 32px #c400ff; transform: scale(1.1); }
+  </style>
 </head>
 <body>
 
 <header>
   <h1>Samir Abdumo'minov</h1>
   <p>Dasturchi va dizayner bo‘lish yo‘lida.</p>
-      
 </header>
 
 <nav>
@@ -264,19 +198,18 @@ header::before {
   <a href="#portfolio">Portfolio</a>
   <a href="#contact">Bog'lanish</a>
 </nav>
-<button id="themeToggle" class="theme-toggle"position:fixed; right:20px; top:20px; background:#0d0d0d; border:1px solid #c400ff; color:#c400ff; padding:8px 14px; border-radius:8px; cursor:pointer; z-index:999;">🌙</button>
+
+<button id="themeToggle" class="theme-toggle">🌙</button>
 
 <section id="profile" class="fade-in">
-  <img src="Avatar.jpg" alt="Profile">
+  <img src="Avatar.jpg" alt="Samir Abdumo'minov Profile Picture">
   <h2>Samirbek</h2>
   <p>Frontend va web texnologiyalar bo‘yicha rivojlanayotgan yosh dasturchiman.</p>
-      
 </section>
 
 <section id="skills" class="fade-in">
   <h2 style="color:#c400ff;">Ko'nikmalar</h2>
   <p>O‘rganayotgan dasturlash texnologiyalarim:</p>
-      
   <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
     <span style="border:1px solid #c400ff; padding:10px 20px; border-radius:8px;">HTML</span>
     <span style="border:1px solid #c400ff; padding:10px 20px; border-radius:8px;">CSS</span>
@@ -293,70 +226,67 @@ header::before {
     Dasturlash, web texnologiyalar, sun’iy intellekt, robototexnika va 3D dizayn bilan shug‘ullanaman.
     Kelajakda yetakchi dasturchi va dizayner bo‘lishni maqsad qilganman.
   </p>
-      
 </section>
 
 <section id="portfolio" class="fade-in">
   <h2 style="text-shadow: 0 0 10px #c400ff;">Portfolio</h2>
-
   <div class="portfolio-grid">
-
     <div class="project-card">
+      <img src="calculator.png" alt="Calculator Project">
       <h3>Kalkulyator</h3>
       <p>Oddiy arifmetik amallarni bajaruvchi web kalkulyator.</p>
-      
-      
+      <div class="project-links">
+        <a href="#" target="_blank">Demo</a>
+        <a href="#" target="_blank">GitHub</a>
+      </div>
     </div>
 
     <div class="project-card">
+      <img src="ai-bot.png" alt="AI Bot Project">
       <h3>AI Bot</h3>
       <p>Savollarga javob bera oladigan sodda chatbot.</p>
-      
-      
+      <div class="project-links">
+        <a href="#" target="_blank">Demo</a>
+        <a href="#" target="_blank">GitHub</a>
+      </div>
     </div>
 
     <div class="project-card">
+      <img src="mini-game.png" alt="Mini Game Project">
       <h3>Mini O‘yin</h3>
       <p>HTML, CSS va JavaScript yordamida tuzilgan kichik o‘yin.</p>
-      
-      
+      <div class="project-links">
+        <a href="#" target="_blank">Demo</a>
+        <a href="#" target="_blank">GitHub</a>
+      </div>
     </div>
-
   </div>
 </section>
 
 <section id="contact" class="fade-in">
   <h2 style="color:#c400ff;">Bog‘lanish uchun</h2>
   <p>Email: <a href="mailto:samirabdumominov@gmail.com" style="color:#c400ff;">samirabdumominov@gmail.com</a></p>
-      
   <p>GitHub: <a href="https://github.com/Samir20122025" target="_blank" style="color:#c400ff;">github.com/Samir20122025</a></p>
-      
 </section>
 
 <script>
+// Fade-in observer
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("show"); });
 });
 document.querySelectorAll(".fade-in").forEach(sec => observer.observe(sec));
-</script>
 
-<script>
+// Theme toggle with localStorage
 const toggle = document.getElementById('themeToggle');
-let light = false;
+if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');
+toggle.textContent = document.documentElement.classList.contains('light-mode') ? '☀️' : '🌙';
 toggle.onclick = () => {
-  light = !light;
   document.documentElement.classList.toggle('light-mode');
-  toggle.textContent = light ? '☀️' : '🌙';
+  localStorage.setItem('theme', document.documentElement.classList.contains('light-mode') ? 'light' : 'dark');
+  toggle.textContent = document.documentElement.classList.contains('light-mode') ? '☀️' : '🌙';
 };
-</script>
-<script>
-const toggle=document.getElementById('themeToggle');
-toggle.addEventListener('click',()=>{
- document.documentElement.classList.toggle('light-mode');
- toggle.textContent = document.documentElement.classList.contains('light-mode') ? '🌞' : '🌙';
-});
-</script>
-<script>
+
+// Scroll reveal
 const revealElements = document.querySelectorAll('.reveal');
 function revealOnScroll() {
   const trigger = window.innerHeight * 0.85;
@@ -368,5 +298,6 @@ function revealOnScroll() {
 window.addEventListener('scroll', revealOnScroll);
 revealOnScroll();
 </script>
+
 </body>
 </html>
