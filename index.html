@@ -6,232 +6,46 @@
   <title>Samir Abdumo'minov Portfolio</title>
 
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
+    body { margin:0; padding:0; background:#000; font-family:Arial, sans-serif; color:#fff; transition: background .3s, color .3s; }
+    header { text-align:center; padding:40px 0; background:#0d0d0d; color:#c400ff; text-shadow:0 0 18px #c400ff; position:relative; overflow:hidden; transition: background .3s, color .3s; }
+    header::before { content:""; position:absolute; top:0; left:-150%; width:300%; height:100%; background: linear-gradient(120deg, transparent, #c400ff44, transparent); animation: headerGlow 6s infinite linear; filter: blur(28px);}
+    @keyframes headerGlow {0%{transform:translateX(-100%);}50%{transform:translateX(0%);}100%{transform:translateX(100%);}}
+    nav { display:flex; justify-content:center; gap:35px; background:#0d0d0d; padding:18px 0; position:sticky; top:0; border-bottom:1px solid #3a0055; z-index:100; transition: background .3s, color .3s;}
+    nav a { position:relative; color:#c400ff; text-decoration:none; font-size:16px; padding-bottom:5px; transition:.3s;}
+    nav a::after { content:""; position:absolute; left:0; bottom:0; width:0%; height:2px; background:#c400ff; box-shadow:0 0 6px #c400ff,0 0 12px #c400ff; transition:width .35s ease;}
+    nav a:hover::after { width:100%; }
+    section { padding:70px 20px; text-align:center; transition: background .3s, color .3s; }
+    #profile img { width:170px; height:170px; border-radius:50%; object-fit:cover; box-shadow:0 0 18px #c400ff,0 0 36px #c400ff; margin-bottom:15px; }
+    .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:25px; max-width:950px; margin:auto; }
+    .project-card { background:#111; border:2px solid #c400ff; border-radius:12px; box-shadow:0 0 18px #c400ff44; overflow:hidden; transition:.35s; }
+    .project-card:hover { transform:translateY(-8px); box-shadow:0 0 35px #c400ffaa; }
+    .project-card img { width:100%; height:160px; object-fit:cover; border-bottom:2px solid #c400ff; transition:transform .4s ease; }
+    .project-card h3 { color:#c400ff; margin-top:15px; }
+    .project-card p { font-size:15px; opacity:0.8; padding:0 12px 8px 12px; }
+    .project-links { display:flex; justify-content:center; gap:12px; padding-bottom:14px; }
+    .project-links a, .project-links button { border:1px solid #c400ff; padding:6px 14px; border-radius:8px; color:#c400ff; text-decoration:none; font-size:14px; transition:.3s; background:none; cursor:pointer; }
+    .project-links a:hover, .project-links button:hover { background:#c400ff; color:#000; box-shadow:0 0 12px #c400ff; }
 
-    header {
-      text-align: center;
-      padding: 40px 0;
-      background: #0d0d0d;
-      color: #c400ff;
-      text-shadow: 0 0 18px #c400ff;
-      position: relative;
-      overflow: hidden;
-    }
+    .theme-toggle { position: fixed; right:20px; top:20px; padding:10px 14px; border-radius:50%; border:1px solid #c400ff; background:rgba(20,20,20,0.45); backdrop-filter:blur(10px); color:#c400ff; cursor:pointer; transition:.3s; z-index:999;}
+    .theme-toggle:hover { box-shadow:0 0 18px #c400ff,0 0 32px #c400ff; transform:scale(1.1); }
 
-    header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -150%;
-      width: 300%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent, #c400ff44, transparent);
-      animation: headerGlow 6s infinite linear;
-      filter: blur(28px);
-    }
+    /* Modal styles */
+    #calculatorModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; backdrop-filter:blur(8px); background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000; }
+    #calculatorModalContent { width:80%; max-width:600px; background:#111; border-radius:12px; padding:20px; position:relative; }
+    #calculatorModal iframe { width:100%; height:400px; border:none; border-radius:12px; }
+    #calculatorModal button { position:absolute; top:10px; right:10px; background:#c400ff; border:none; border-radius:50%; width:30px; height:30px; color:#000; cursor:pointer; }
 
-    @keyframes headerGlow {
-      0% { transform: translateX(-100%); }
-      50% { transform: translateX(0%); }
-      100% { transform: translateX(100%); }
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 35px;
-      background: #0d0d0d;
-      padding: 18px 0;
-      position: sticky;
-      top: 0;
-      border-bottom: 1px solid #3a0055;
-      z-index: 100;
-    }
-
-    nav a {
-      position: relative;
-      color: #c400ff;
-      text-decoration: none;
-      font-size: 16px;
-      padding-bottom: 5px;
-      transition: .3s;
-    }
-
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 0%;
-      height: 2px;
-      background: #c400ff;
-      box-shadow: 0 0 6px #c400ff, 0 0 12px #c400ff;
-      transition: width .35s ease;
-    }
-
-    nav a:hover::after { width: 100%; }
-
-    section { padding: 70px 20px; text-align: center; }
-
-    #profile img {
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 18px #c400ff, 0 0 36px #c400ff;
-      margin-bottom: 15px;
-    }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 25px;
-      max-width: 950px;
-      margin: auto;
-    }
-
-    .project-card {
-      background: #111;
-      border: 2px solid #c400ff;
-      border-radius: 12px;
-      box-shadow: 0 0 18px #c400ff44;
-      overflow: hidden;
-      transition: .35s;
-    }
-
-    .project-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 35px #c400ffaa;
-    }
-
-    .project-card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-bottom: 2px solid #c400ff;
-      transition: transform .4s ease;
-    }
-
-    .project-card h3 {
-      color: #c400ff;
-      margin-top: 15px;
-    }
-
-    .project-card p {
-      font-size: 15px;
-      opacity: 0.8;
-      padding: 0 12px 8px 12px;
-    }
-
-    .project-links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      padding-bottom: 14px;
-    }
-
-    .project-links a, .project-links button {
-      border: 1px solid #c400ff;
-      padding: 6px 14px;
-      border-radius: 8px;
-      color: #c400ff;
-      text-decoration: none;
-      font-size: 14px;
-      transition: .3s;
-      background:none;
-      cursor:pointer;
-    }
-
-    .project-links a:hover, .project-links button:hover {
-      background:#c400ff;
-      color:#000;
-      box-shadow:0 0 12px #c400ff;
-    }
-
-    @media (max-width: 600px) {
-      nav { gap: 18px; }
-      #profile img { width: 130px; height: 130px; }
-      .portfolio-grid { gap: 18px; }
-      .project-card p { font-size: 14px; }
-    }
-
+    /* Light mode */
     .light-mode body { background:#fff; color:#000; }
     .light-mode header, .light-mode nav { background:#eaeaea; color:#000; text-shadow:none; }
     .light-mode a, .light-mode h2, .light-mode h3 { color:#7a00aa !important; }
-    .light-mode section { background: rgba(255, 255, 255, 0.4) !important; color: #000 !important; backdrop-filter: blur(12px); border-radius: 12px; }
-    .light-mode .project-card { background: rgba(255, 255, 255, 0.45) !important; border: 1px solid rgba(0,0,0,0.15) !important; box-shadow: none !important; }
+    .light-mode section { background: rgba(255,255,255,0.4); color:#000; backdrop-filter: blur(12px); border-radius:12px; }
+    .light-mode .project-card { background: rgba(255,255,255,0.45); border:1px solid rgba(0,0,0,0.15); box-shadow:none; }
     .light-mode .theme-toggle { background: rgba(255,255,255,0.45); border:1px solid #7a00c8; color:#7a00c8; }
-
-    .theme-toggle {
-      position: fixed;
-      right: 20px;
-      top: 20px;
-      padding: 10px 14px;
-      border-radius: 50%;
-      border: 1px solid #c400ff;
-      background: rgba(20,20,20,0.45);
-      backdrop-filter: blur(10px);
-      color: #c400ff;
-      cursor: pointer;
-      transition: .3s;
-      z-index: 999;
-    }
-
-    .theme-toggle:hover { box-shadow: 0 0 18px #c400ff, 0 0 32px #c400ff; transform: scale(1.1); }
-
-    /* Modal styles */
-    #calculatorModal {
-      display:none;
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      backdrop-filter: blur(8px);
-      background: rgba(0,0,0,0.7);
-      justify-content:center;
-      align-items:center;
-      z-index:1000;
-    }
-
-    #calculatorModalContent {
-      width:80%;
-      max-width:600px;
-      background:#111;
-      border-radius:12px;
-      padding:20px;
-      position:relative;
-    }
-
-    #calculatorModal iframe {
-      width:100%;
-      height:400px;
-      border:none;
-      border-radius:12px;
-    }
-
-    #calculatorModal button {
-      position:absolute;
-      top:10px;
-      right:10px;
-      background:#c400ff;
-      border:none;
-      border-radius:50%;
-      width:30px;
-      height:30px;
-      color:#000;
-      cursor:pointer;
-    }
   </style>
 </head>
-<body>
 
+<body>
 <header>
   <h1>Samir Abdumo'minov</h1>
   <p>Dasturchi va dizayner bo‘lish yo‘lida.</p>
@@ -242,7 +56,7 @@
   <a href="#skills">Ko'nikmalar</a>
   <a href="#about">Men haqimda</a>
   <a href="#portfolio">Portfolio</a>
-  <a href="#contact">Bog'lanish</a>
+  <a href="#contact">Bog‘lanish</a>
 </nav>
 
 <button id="themeToggle" class="theme-toggle">🌙</button>
@@ -275,7 +89,7 @@
 </section>
 
 <section id="portfolio" class="fade-in">
-  <h2 style="text-shadow: 0 0 10px #c400ff;">Portfolio</h2>
+  <h2 style="text-shadow:0 0 10px #c400ff;">Portfolio</h2>
   <div class="portfolio-grid">
     <div class="project-card">
       <img src="calculator.png" alt="Calculator Project">
@@ -286,22 +100,6 @@
         <a href="#" target="_blank">GitHub</a>
       </div>
     </div>
-
-    <div id="calculatorModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; backdrop-filter: blur(8px); background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000;">
-      <div style="width:80%; max-width:600px; background:#111; border-radius:12px; padding:20px; position:relative;">
-        <button id="closeCalculator" style="position:absolute; top:10px; right:10px; background:#c400ff; border:none; border-radius:50%; width:30px; height:30px; color:#000; cursor:pointer;">X</button>
-        <iframe src="demo_cal.html" style="width:100%; height:400px; border:none; border-radius:12px;"></iframe>
-      </div>
-    </div>
-
-    <script>
-      const modal = document.getElementById('calculatorModal');
-      const openBtn = document.getElementById('openCalculator');
-      const closeBtn = document.getElementById('closeCalculator');
-
-      openBtn.onclick = () => { modal.style.display = 'flex'; }
-      closeBtn.onclick = () => { modal.style.display = 'none'; }
-    </script>
 
     <div class="project-card">
       <img src="ai-bot.png" alt="AI Bot Project">
@@ -325,4 +123,37 @@
   </div>
 </section>
 
-<section
+<!-- Kalkulyator modal -->
+<div id="calculatorModal">
+  <div id="calculatorModalContent">
+    <button id="closeCalculator">X</button>
+    <iframe src="demo_cal.html"></iframe>
+  </div>
+</div>
+
+<section id="contact" class="fade-in">
+  <h2 style="color:#c400ff;">Bog‘lanish uchun</h2>
+  <p>Email: <a href="mailto:samirabdumominov@gmail.com" style="color:#c400ff;">samirabdumominov@gmail.com</a></p>
+  <p>GitHub: <a href="https://github.com/Samir20122025" target="_blank" style="color:#c400ff;">github.com/Samir20122025</a></p>
+</section>
+
+<script>
+  // Theme toggle
+  const toggle = document.getElementById('themeToggle');
+  if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');
+  toggle.textContent = document.documentElement.classList.contains('light-mode') ? '☀️' : '🌙';
+  toggle.onclick = () => {
+    document.documentElement.classList.toggle('light-mode');
+    localStorage.setItem('theme', document.documentElement.classList.contains('light-mode') ? 'light' : 'dark');
+    toggle.textContent = document.documentElement.classList.contains('light-mode') ? '☀️' : '🌙';
+  };
+
+  // Modal open/close
+  const modal = document.getElementById('calculatorModal');
+  const openBtn = document.getElementById('openCalculator');
+  const closeBtn = document.getElementById('closeCalculator');
+  openBtn.onclick = () => { modal.style.display = 'flex'; }
+  closeBtn.onclick = () => { modal.style.display = 'none'; }
+</script>
+</body>
+</html>
