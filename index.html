@@ -163,12 +163,54 @@
       .project-card p { font-size: 14px; }
     }
 
-    .light-mode body { background:#fff; color:#000; }
-    .light-mode header, .light-mode nav { background:#eaeaea; color:#000; text-shadow:none; }
-    .light-mode a, .light-mode h2, .light-mode h3 { color:#7a00aa !important; }
-    .light-mode section { background: rgba(255, 255, 255, 0.4) !important; color: #000 !important; backdrop-filter: blur(12px); border-radius: 12px; }
-    .light-mode .project-card { background: rgba(255, 255, 255, 0.45) !important; border: 1px solid rgba(0,0,0,0.15) !important; box-shadow: none !important; }
-    .light-mode .theme-toggle { background: rgba(255,255,255,0.45); border:1px solid #7a00c8; color:#7a00c8; }
+    /* Faqat light mode tuzatishlari */
+    .light-mode {
+      background:#fff;
+      color:#000;
+    }
+
+    .light-mode header {
+      background:#f9f9f9;
+      color:#7a00aa;
+      text-shadow:none;
+      border-bottom:1px solid #ccc;
+    }
+
+    .light-mode nav {
+      background:#f1f1f1;
+      border-bottom:1px solid #ccc;
+    }
+
+    .light-mode nav a {
+      color:#7a00aa;
+    }
+
+    .light-mode section {
+      background:#fff;
+      color:#000;
+    }
+
+    .light-mode .project-card {
+      background:#fafafa;
+      border:1px solid #ccc;
+      box-shadow:none;
+      color:#000;
+    }
+
+    .light-mode .project-card h3 {
+      color:#7a00aa;
+    }
+
+    .light-mode .project-links a {
+      color:#7a00aa;
+      border-color:#7a00aa;
+    }
+
+    .light-mode .theme-toggle {
+      background:#fff;
+      border-color:#7a00aa;
+      color:#7a00aa;
+    }
 
     .theme-toggle {
       position: fixed;
@@ -187,27 +229,9 @@
 
     .theme-toggle:hover { box-shadow: 0 0 18px #c400ff, 0 0 32px #c400ff; transform: scale(1.1); }
 
-    body, header, nav, section, .project-card {
-      transition: background 0.4s, color 0.4s, box-shadow 0.4s, border 0.4s;
-    }
-
   </style>
 </head>
-
 <body>
-
- <!-- Visitor Modal -->
-<div id="visitorOverlay" class="overlay" aria-hidden="true" style="display:none; position:fixed; inset:0; background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); z-index:10000; display:flex; align-items:center; justify-content:center;">
-  <div class="modal" style="background:#111; padding:1.5rem; border-radius:12px; width:320px; max-width:90%; text-align:center; box-shadow:0 0 28px #c400ff;">
-    <h2 style="margin-bottom:8px; color:#c400ff;">Kim kirganini yozing</h2>
-    <p style="font-size:14px; color:#ccc; margin-bottom:12px;">Saytga kim kirayotganini qisqacha yozing. Ma’lumot serverga yuboriladi.</p>
-    <input id="visitorInput" type="text" placeholder="Ism yoki kim ekanligingiz..." maxlength="50" style="width:100%; padding:0.6rem 0.9rem; border-radius:10px; border:1px solid #c400ff; margin-bottom:12px; color:#000;">
-    <div style="display:flex; gap:10px;">
-      <button id="skipBtn" style="flex:1; padding:0.6rem; border-radius:10px; border:none; background:transparent; color:#c400ff; border:1px solid #c400ff; cursor:pointer;">Xohlamayman</button>
-      <button id="confirmBtn" style="flex:1; padding:0.6rem; border-radius:10px; border:none; background:#c400ff; color:#000; font-weight:600; cursor:pointer;">Tasdiqlash</button>
-    </div>
-  </div>
-</div> 
 
 <header>
   <h1>Samir Abdumo'minov</h1>
@@ -225,23 +249,27 @@
 <button id="themeToggle" class="theme-toggle">🌙</button>
 
 <script>
-  const themeToggle = document.getElementById('themeToggle');
+const themeToggle = document.getElementById('themeToggle');
 
-  // Light/Dark toggle
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-    themeToggle.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
-    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-  });
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
 
-  // Sayfa ochilganda oxirgi tanlangan theme qaytadi
-  const savedTheme = localStorage.getItem('theme');
-  if(savedTheme === 'light'){
-    document.body.classList.add('light-mode');
+  if(document.body.classList.contains('light-mode')){
     themeToggle.textContent = '☀️';
+    localStorage.setItem('theme', 'light');
   } else {
     themeToggle.textContent = '🌙';
+    localStorage.setItem('theme', 'dark');
   }
+});
+
+const savedTheme = localStorage.getItem('theme');
+if(savedTheme === 'light'){
+  document.body.classList.add('light-mode');
+  themeToggle.textContent = '☀️';
+} else {
+  themeToggle.textContent = '🌙';
+}
 </script>
 
 <section id="profile" class="fade-in">
@@ -311,61 +339,6 @@
   <p>Email: <a href="mailto:samirabdumominov@gmail.com" style="color:#c400ff;">samirabdumominov@gmail.com</a></p>
   <p>GitHub: <a href="https://github.com/Samir20122025" target="_blank" style="color:#c400ff;">github.com/Samir20122025</a></p>
 </section>
-
-<script>
-(function(){
-  const overlay = document.getElementById('visitorOverlay');
-  const input = document.getElementById('visitorInput');
-  const confirmBtn = document.getElementById('confirmBtn');
-  const skipBtn = document.getElementById('skipBtn');
-
-  const DISMISS_KEY = 'visitorAcknowledged_v1';
-
-  function showModal(){
-    overlay.style.display = 'flex';
-    input.focus();
-  }
-
-  function closeModal(){
-    overlay.style.display = 'none';
-  }
-
-  function confirmHandler(){
-    const text = input.value.trim();
-    const record = { text: text || null, at: new Date().toISOString(), ua: navigator.userAgent };
-
-    fetch('/api/visitor', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(record)
-    });
-
-    localStorage.setItem(DISMISS_KEY, '1');
-    closeModal();
-  }
-
-  function skipHandler(){
-    // *** MUHIM TUZATISH ***
-    localStorage.setItem(DISMISS_KEY, '1'); 
-    closeModal();
-  }
-
-  confirmBtn.addEventListener('click', confirmHandler);
-  skipBtn.addEventListener('click', skipHandler);
-
-  // *** BFCACHE TUZATISH ***
-  window.addEventListener("pageshow", (event) => {
-    if (event.persisted && localStorage.getItem(DISMISS_KEY)) {
-      closeModal();
-    }
-  });
-
-  // Modalni faqat birinchi tashrifda ko'rsatamiz
-  if(!localStorage.getItem(DISMISS_KEY)){
-    window.addEventListener('load', ()=>{ setTimeout(showModal, 300); });
-  }
-})();
-</script>
 
 </body>
 </html>
