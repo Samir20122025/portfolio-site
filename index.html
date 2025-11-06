@@ -238,7 +238,24 @@
   <div class="modal" style="background:#111; padding:1.5rem; border-radius:12px; width:320px; max-width:90%; text-align:center; box-shadow:0 0 28px #c400ff;">
     <h2 style="margin-bottom:8px; color:#c400ff;">Kim kirganini yozing</h2>
     <p style="font-size:14px; color:#ccc; margin-bottom:12px;">Saytga kim kirayotganini qisqacha yozing. Ma’lumot serverga yuboriladi.</p>
-    <input id="visitorInput" type="text" placeholder="Ism yoki kim ekanligingiz..." maxlength="70" style="width:100%; padding:0.6rem 0.9rem; border-radius:10px; border:1px solid #c400ff; margin-bottom:12px; color:#000;">
+    <input 
+      id="visitorInput"
+      type="text"
+      placeholder="Ism yoki kim ekanligingiz..."
+      maxlength="70"
+      style="
+        width: 100%;
+        max-width: 100%;
+        padding: 0.6rem 0.9rem;
+        border-radius: 10px;
+        border: 1px solid #c400ff;
+        margin-bottom: 12px;
+        color: #000;
+        box-sizing: border-box;
+        font-size: 15px;
+      "
+    >
+
     <div style="display:flex; gap:10px;">
       <button id="skipBtn" style="flex:1; padding:0.6rem; border-radius:10px; border:none; background:transparent; color:#c400ff; border:1px solid #c400ff; cursor:pointer;">Xohlamayman</button>
       <button id="confirmBtn" style="flex:1; padding:0.6rem; border-radius:10px; border:none; background:#c400ff; color:#000; font-weight:600; cursor:pointer;">Tasdiqlash</button>
