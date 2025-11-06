@@ -342,33 +342,58 @@
 </section>
 
 <script>
-// Fade-in observer
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("show"); });
-});
-document.querySelectorAll(".fade-in").forEach(sec => observer.observe(sec));
+(function(){
+  const overlay = document.getElementById('visitorOverlay');
+  const input = document.getElementById('visitorInput');
+  const confirmBtn = document.getElementById('confirmBtn');
+  const skipBtn = document.getElementById('skipBtn');
 
-// Theme toggle with localStorage
-const toggle = document.getElementById('themeToggle');
-if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');
-toggle.textContent = document.documentElement.classList.contains('light-mode') ? '☀️' : '🌙';
-toggle.onclick = () => {
-  document.documentElement.classList.toggle('light-mode');
-  localStorage.setItem('theme', document.documentElement.classList.contains('light-mode') ? 'light' : 'dark');
-  toggle.textContent = document.documentElement.classList.contains('light-mode') ? '☀️' : '🌙';
-};
+  const DISMISS_KEY = 'visitorAcknowledged_v1';
 
-// Scroll reveal
-const revealElements = document.querySelectorAll('.reveal');
-function revealOnScroll() {
-  const trigger = window.innerHeight * 0.85;
-  revealElements.forEach(el => {
-    const rect = el.getBoundingClientRect().top;
-    if(rect < trigger) el.classList.add('show');
+  function showModal(){
+    overlay.style.display = 'flex';
+    input.focus();
+  }
+
+  function closeModal(){
+    overlay.style.display = 'none';
+  }
+
+  function confirmHandler(){
+    const text = input.value.trim();
+    const record = { text: text || null, at: new Date().toISOString(), ua: navigator.userAgent };
+
+    fetch('/api/visitor', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(record)
+    });
+
+    localStorage.setItem(DISMISS_KEY, '1');
+    closeModal();
+  }
+
+  function skipHandler(){
+    // *** MUHIM TUZATISH ***
+    localStorage.setItem(DISMISS_KEY, '1'); 
+    closeModal();
+  }
+
+  confirmBtn.addEventListener('click', confirmHandler);
+  skipBtn.addEventListener('click', skipHandler);
+
+  // *** BFCACHE TUZATISH ***
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted && localStorage.getItem(DISMISS_KEY)) {
+      closeModal();
+    }
   });
-}
-window.addEventListener('scroll', revealOnScroll);
-revealOnScroll();
+
+  // Modalni faqat birinchi tashrifda ko'rsatamiz
+  if(!localStorage.getItem(DISMISS_KEY)){
+    window.addEventListener('load', ()=>{ setTimeout(showModal, 300); });
+  }
+})();
 </script>
 
 </body>
