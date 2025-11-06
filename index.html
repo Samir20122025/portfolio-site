@@ -236,11 +236,20 @@
   confirmBtn.addEventListener('click', confirmHandler);
   skipBtn.addEventListener('click', skipHandler);
 
-  // ✅ Faqat demo sahifalarida modal chiqmasin (yangi sahifa yuklanganda qayta paydo bo'lishini oldini olish uchun)
-  if(!localStorage.getItem(DISMISS_KEY) && !location.pathname.includes("demo")){
-    window.addEventListener('load', ()=>{ setTimeout(showModal, 300); });
-  }
-})();
+  function shouldShowModal() {
+  // Faqat asosiy sahifada ochilsin:
+  const isMainPage = location.pathname.endsWith("index.html") || location.pathname === "/" || location.pathname === "";
+  
+  // Oldin tasdiqlanmagan bo‘lsa:
+  const notAcknowledged = !localStorage.getItem(DISMISS_KEY);
+
+  return isMainPage && notAcknowledged;
+}
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) return; // back-cache holatida qayta ochilmasin
+  if (shouldShowModal()) setTimeout(showModal, 300);
+});
 </script>
 
 <body>
