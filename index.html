@@ -225,29 +225,18 @@
 <button id="themeToggle" class="theme-toggle">🌙</button>
 
 <script>
-const themeToggle = document.getElementById('themeToggle');
-
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('light-mode');
-
-  if(document.body.classList.contains('light-mode')){
-    themeToggle.textContent = '☀️';  // Light mode icon
-    localStorage.setItem('theme', 'light'); // saqlash
-  } else {
-    themeToggle.textContent = '🌙';  // Dark mode icon
-    localStorage.setItem('theme', 'dark');  // saqlash
-  }
-});
-
-// Sahifa ochilganda oxirgi tanlangan mode qaytadi
-const savedTheme = localStorage.getItem('theme');
-if(savedTheme === 'light'){
-  document.body.classList.add('light-mode');
-  themeToggle.textContent = '☀️';
-} else {
-  themeToggle.textContent = '🌙';
-}
-</script>
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      themeToggle.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+      localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+    });
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme === 'light'){
+      document.body.classList.add('light-mode');
+      themeToggle.textContent = '☀️';
+    }
+  </script>
 
 <section id="profile" class="fade-in">
   <img src="Avatar.png" alt="Samir Abdumo'minov Profile Picture">
