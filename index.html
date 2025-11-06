@@ -225,18 +225,24 @@
 <button id="themeToggle" class="theme-toggle">🌙</button>
 
 <script>
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-      themeToggle.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
-      localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-    });
-    const savedTheme = localStorage.getItem('theme');
-    if(savedTheme === 'light'){
-      document.body.classList.add('light-mode');
-      themeToggle.textContent = '☀️';
-    }
-  </script>
+  const themeToggle = document.getElementById('themeToggle');
+
+  // Light/Dark toggle
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    themeToggle.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  });
+
+  // Sayfa ochilganda oxirgi tanlangan theme qaytadi
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'light'){
+    document.body.classList.add('light-mode');
+    themeToggle.textContent = '☀️';
+  } else {
+    themeToggle.textContent = '🌙';
+  }
+</script>
 
 <section id="profile" class="fade-in">
   <img src="Avatar.png" alt="Samir Abdumo'minov Profile Picture">
