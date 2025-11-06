@@ -240,12 +240,17 @@
     closeModal();
   }
 
-  function skipHandler(){ closeModal(); }
+  function skipHandler(){
+    // agar foydalanuvchi xohlamasa, uni qayta so'ramaslik uchun ham saqlaymiz
+    localStorage.setItem(DISMISS_KEY, '1');
+    closeModal();
+  }
 
   confirmBtn.addEventListener('click', confirmHandler);
   skipBtn.addEventListener('click', skipHandler);
 
-  if(!localStorage.getItem(DISMISS_KEY)){
+  // ✅ Faqat demo sahifalarida modal chiqmasin (yangi sahifa yuklanganda qayta paydo bo'lishini oldini olish uchun)
+  if(!localStorage.getItem(DISMISS_KEY) && !location.pathname.includes("demo")){
     window.addEventListener('load', ()=>{ setTimeout(showModal, 300); });
   }
 })();
