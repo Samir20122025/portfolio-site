@@ -182,6 +182,11 @@
     }
 
     .theme-toggle:hover { box-shadow: 0 0 18px #c400ff, 0 0 32px #c400ff; transform: scale(1.1); }
+
+    body, header, nav, section, .project-card {
+      transition: background 0.4s, color 0.4s, box-shadow 0.4s, border 0.4s;
+    }
+
   </style>
 </head>
 
@@ -214,6 +219,31 @@
 </nav>
 
 <button id="themeToggle" class="theme-toggle">🌙</button>
+
+<script>
+const themeToggle = document.getElementById('themeToggle');
+
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+
+  if(document.body.classList.contains('light-mode')){
+    themeToggle.textContent = '☀️';  // Light mode icon
+    localStorage.setItem('theme', 'light'); // saqlash
+  } else {
+    themeToggle.textContent = '🌙';  // Dark mode icon
+    localStorage.setItem('theme', 'dark');  // saqlash
+  }
+});
+
+// Sahifa ochilganda oxirgi tanlangan mode qaytadi
+const savedTheme = localStorage.getItem('theme');
+if(savedTheme === 'light'){
+  document.body.classList.add('light-mode');
+  themeToggle.textContent = '☀️';
+} else {
+  themeToggle.textContent = '🌙';
+}
+<script>
 
 <section id="profile" class="fade-in">
   <img src="Avatar.png" alt="Samir Abdumo'minov Profile Picture">
