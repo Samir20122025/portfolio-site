@@ -10,22 +10,40 @@
   <title>Samir Abdumo'minov Portfolio</title>
 
   <style>
+    /* ===========================
+       Asl stil (sizdan kelgan) + qo'shimchalar
+       =========================== */
+
+    :root{
+      --accent: #c400ff;
+      --accent-strong-start: #ff00cc;
+      --accent-strong-end: #6600ff;
+      --bg-dark: #000;
+      --card-dark: #111;
+    }
+
+    *{box-sizing: border-box;}
+
     body {
       margin: 0;
       padding: 0;
-      background: #000;
+      background: var(--bg-dark);
       font-family: Arial, sans-serif;
       color: #fff;
+      transition: background 0.5s, color 0.5s; /* smooth theme transition */
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
     header {
       text-align: center;
       padding: 40px 0;
       background: #0d0d0d;
-      color: #c400ff;
-      text-shadow: 0 0 18px #c400ff;
+      color: var(--accent);
+      text-shadow: 0 0 18px var(--accent);
       position: relative;
       overflow: hidden;
+      transition: background 0.5s, color 0.5s;
     }
 
     header::before {
@@ -35,9 +53,10 @@
       left: -150%;
       width: 300%;
       height: 100%;
-      background: linear-gradient(120deg, transparent, #c400ff44, transparent);
+      background: linear-gradient(120deg, transparent, rgba(196,0,255,0.27), transparent);
       animation: headerGlow 6s infinite linear;
       filter: blur(28px);
+      pointer-events: none;
     }
 
     @keyframes headerGlow {
@@ -56,15 +75,16 @@
       top: 0;
       border-bottom: 1px solid #3a0055;
       z-index: 100;
+      transition: background 0.5s, color 0.5s;
     }
 
     nav a {
       position: relative;
-      color: #c400ff;
+      color: var(--accent);
       text-decoration: none;
       font-size: 16px;
       padding-bottom: 5px;
-      transition: .3s;
+      transition: all 0.3s ease;
     }
 
     nav a::after {
@@ -74,8 +94,8 @@
       bottom: 0;
       width: 0%;
       height: 2px;
-      background: #c400ff;
-      box-shadow: 0 0 6px #c400ff, 0 0 12px #c400ff;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent), 0 0 12px var(--accent);
       transition: width .35s ease;
     }
 
@@ -88,8 +108,14 @@
       height: 170px;
       border-radius: 50%;
       object-fit: cover;
-      box-shadow: 0 0 18px #c400ff, 0 0 36px #c400ff;
+      box-shadow: 0 0 18px var(--accent), 0 0 36px var(--accent);
       margin-bottom: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #profile img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px var(--accent), 0 0 50px var(--accent);
     }
 
     .portfolio-grid {
@@ -101,59 +127,68 @@
     }
 
     .project-card {
-      background: #111;
-      border: 2px solid #c400ff;
+      background: var(--card-dark);
+      border: 2px solid var(--accent);
       border-radius: 12px;
-      box-shadow: 0 0 18px #c400ff44;
+      box-shadow: 0 0 18px rgba(196,0,255,0.27);
       overflow: hidden;
-      transition: .35s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
 
     .project-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 0 35px #c400ffaa;
+      box-shadow: 0 0 35px rgba(196,0,255,0.45);
     }
 
     .project-card img {
       width: 100%;
       height: 160px;
       object-fit: cover;
-      border-bottom: 2px solid #c400ff;
-      transition: transform .4s ease;
+      border-bottom: 2px solid var(--accent);
+      transition: transform 0.4s ease;
     }
 
     .project-card h3 {
-      color: #c400ff;
-      margin-top: 15px;
+      color: var(--accent);
+      margin-top: 12px;
+      margin-bottom: 6px;
+      padding: 0 12px;
+      transition: color 0.5s;
     }
 
     .project-card p {
       font-size: 15px;
-      opacity: 0.8;
-      padding: 0 12px 8px 12px;
+      opacity: 0.9;
+      padding: 0 12px 12px 12px;
+      flex: 1;
     }
 
     .project-links {
       display: flex;
       justify-content: center;
       gap: 12px;
-      padding-bottom: 14px;
+      padding: 12px;
     }
 
     .project-links a {
-      border: 1px solid #c400ff;
+      border: 1px solid var(--accent);
       padding: 6px 14px;
       border-radius: 8px;
-      color: #c400ff;
+      color: var(--accent);
       text-decoration: none;
       font-size: 14px;
-      transition: .3s;
+      transition: all 0.3s ease;
+      background: transparent;
     }
 
     .project-links a:hover {
-      background:#c400ff;
+      background:var(--accent);
       color:#000;
-      box-shadow:0 0 12px #c400ff;
+      box-shadow:0 0 12px var(--accent);
     }
 
     @media (max-width: 600px) {
@@ -163,7 +198,41 @@
       .project-card p { font-size: 14px; }
     }
 
-    /* Faqat light mode tuzatishlari */
+    /* Fade-in effect (appear on scroll) */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      will-change: opacity, transform;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      padding: 10px 14px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      background: rgba(20,20,20,0.45);
+      backdrop-filter: blur(10px);
+      color: var(--accent);
+      cursor: pointer;
+      transition: .3s;
+      z-index: 999;
+    }
+
+    .theme-toggle:hover { 
+      box-shadow: 0 0 18px var(--accent), 0 0 32px var(--accent); 
+      transform: scale(1.1); 
+    }
+
+    /* Light mode */
     .light-mode {
       background:#fff;
       color:#000;
@@ -181,94 +250,217 @@
       border-bottom:1px solid #ccc;
     }
 
-    .light-mode nav a {
-      color:#7a00aa;
-    }
+    .light-mode nav a { color:#7a00aa; }
+    .light-mode section { background:#fff; color:#000; }
+    .light-mode .project-card { background:#fafafa; border:1px solid #ccc; box-shadow:none; color:#000; }
+    .light-mode .project-card h3 { color:#7a00aa; }
+    .light-mode .project-links a { color:#7a00aa; border-color:#7a00aa; }
+    .light-mode .theme-toggle { background:#fff; border-color:#7a00aa; color:#7a00aa; }
 
-    .light-mode section {
-      background:#fff;
-      color:#000;
-    }
-
-    .light-mode .project-card {
-      background:#fafafa;
-      border:1px solid #ccc;
-      box-shadow:none;
-      color:#000;
-    }
-
-    .light-mode .project-card h3 {
-      color:#7a00aa;
-    }
-
-    .light-mode .project-links a {
-      color:#7a00aa;
-      border-color:#7a00aa;
-    }
-
-    .light-mode .theme-toggle {
-      background:#fff;
-      border-color:#7a00aa;
-      color:#7a00aa;
-    }
-
-    .theme-toggle {
+    /* ===========================
+       Portfolio modal (added)
+       =========================== */
+    .portfolio-modal-overlay {
+      display: none;
       position: fixed;
-      right: 20px;
-      top: 20px;
-      padding: 10px 14px;
-      border-radius: 50%;
-      border: 1px solid #c400ff;
-      background: rgba(20,20,20,0.45);
-      backdrop-filter: blur(10px);
-      color: #c400ff;
-      cursor: pointer;
-      transition: .3s;
-      z-index: 999;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      z-index: 12000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
     }
 
-    .theme-toggle:hover { box-shadow: 0 0 18px #c400ff, 0 0 32px #c400ff; transform: scale(1.1); }
+    .portfolio-modal {
+      background: #111;
+      color: #fff;
+      border-radius: 12px;
+      max-width: 760px;
+      width: 100%;
+      padding: 18px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
 
+    .portfolio-modal img {
+      width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      margin-bottom: 12px;
+      border-radius: 8px;
+    }
+
+    .portfolio-modal .modal-actions {
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-top: 10px;
+      flex-wrap:wrap;
+    }
+
+    .portfolio-modal .modal-actions a {
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:8px;
+      text-decoration:none;
+      border:1px solid var(--accent);
+      color:var(--accent);
+      transition: all .25s;
+      background: transparent;
+    }
+
+    .portfolio-modal .modal-actions a:hover {
+      background:var(--accent);
+      color:#000;
+    }
+
+    .portfolio-modal .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 18px;
+      padding: 6px 9px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .portfolio-modal .close-btn:hover { background:var(--accent); color:#000; }
+
+    /* ===========================
+       Skills bars + tooltip (premium)
+       =========================== */
+    .skill-bar {
+      position: relative;
+      width: 180px;
+      height: 22px;
+      background: #222;
+      border-radius: 10px;
+      margin: 8px;
+      overflow: visible;
+      display: inline-block;
+      cursor: pointer;
+      box-shadow: 0 0 8px #000;
+      transition: transform 0.3s;
+    }
+
+    .skill-bar:hover {
+      transform: scale(1.05);
+    }
+
+    .skill-bar .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-strong-start), var(--accent-strong-end));
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(196,0,255,0.35);
+      transition: width 1.2s ease-in-out;
+    }
+
+    .skill-bar .percent {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: #fff;
+      font-weight: 600;
+      text-shadow: 0 0 5px var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .skill-bar .tooltip {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #000;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .skill-bar:hover .tooltip { opacity: 1; }
+    .skill-bar:hover .percent { opacity: 1; }
+
+    @media (max-width: 520px) {
+      .skill-bar { 
+        width: 100%; 
+        max-width: none; 
+        display:block; 
+        margin:10px auto; 
+      }
+    }
+
+    /* Visitor modal (your original, slightly polished for z-index) */
+    #visitorOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(6px);
+      z-index: 15000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 16px;
+    }
+
+    #visitorOverlay .modal {
+      background:#111;
+      padding:1.5rem;
+      border-radius:12px;
+      width:320px;
+      max-width:100%;
+      text-align:center;
+      box-shadow:0 0 28px rgba(196,0,255,0.25);
+    }
+
+    /* small utilities */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
   </style>
 </head>
 <body>
 
-<!-- Visitor Modal -->
-<div id="visitorOverlay" class="overlay" aria-hidden="true" style="display:none; position:fixed; inset:0; background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); z-index:10000; display:flex; align-items:center; justify-content:center;">
-  <div class="modal" style="background:#111; padding:1.5rem; border-radius:12px; width:320px; max-width:90%; text-align:center; box-shadow:0 0 28px #c400ff;">
-    <h2 style="margin-bottom:8px; color:#c400ff;">Kim kirganini yozing</h2>
+ <!-- ===========================
+      Visitor Modal (sessionStorage behavior)
+      =========================== -->
+<div id="visitorOverlay" class="overlay" aria-hidden="true" style="display:none;">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="visitorTitle">
+    <h2 id="visitorTitle" style="margin-bottom:8px; color:var(--accent);">Kim kirganini yozing</h2>
     <p style="font-size:14px; color:#ccc; margin-bottom:12px;">Saytga kim kirayotganini qisqacha yozing. (Ixtiyoriy)</p>
     <input 
       id="visitorInput"
       type="text"
       placeholder="Ism yoki kim ekanligingiz..."
       maxlength="70"
-      style="
-        width: 100%;
-        max-width: 100%;
-        padding: 0.6rem 0.9rem;
-        border-radius: 10px;
-        border: 1px solid #c400ff;
-        margin-bottom: 12px;
-        color: #000;
-        box-sizing: border-box;
-        font-size: 15px;
-      "
+      style="width:100%; padding:0.6rem 0.9rem; border-radius:10px; border:1px solid var(--accent); margin-bottom:12px; color:#000;"
     >
-
     <div style="display:flex; gap:10px;">
-      <button id="skipBtn" style="flex:1; padding:0.6rem; border-radius:10px; border:none; background:transparent; color:#c400ff; border:1px solid #c400ff; cursor:pointer;">Xohlamayman</button>
-      <button id="confirmBtn" style="flex:1; padding:0.6rem; border-radius:10px; border:none; background:#c400ff; color:#000; font-weight:600; cursor:pointer;">Tasdiqlash</button>
+      <button id="skipBtn" style="flex:1; padding:0.6rem; border-radius:10px; border:none; background:transparent; color:var(--accent); border:1px solid var(--accent); cursor:pointer;">Xohlamayman</button>
+      <button id="confirmBtn" style="flex:1; padding:0.6rem; border-radius:10px; border:none; background:var(--accent); color:#000; font-weight:600; cursor:pointer;">Tasdiqlash</button>
     </div>
   </div>
-</div>
-  
-<header>
+</div> 
+
+<header class="fade-in">
   <h1>Samir Abdumo'minov</h1>
   <p>Dasturchi va dizayner bo‘lish yo‘lida.</p>
 </header>
 
-<nav>
+<nav class="fade-in">
   <a href="#profile">Asosiy</a>
   <a href="#skills">Ko'nikmalar</a>
   <a href="#about">Men haqimda</a>
@@ -276,9 +468,134 @@
   <a href="#contact">Bog'lanish</a>
 </nav>
 
-<button id="themeToggle" class="theme-toggle">🌙</button>
+<button id="themeToggle" class="theme-toggle" aria-label="Theme toggle">🌙</button>
+
+<section id="profile" class="fade-in">
+  <img src="Avatar.png" alt="Samir Abdumo'minov Profile Picture">
+  <h2>Samirbek</h2>
+  <p>Frontend va web texnologiyalar bo‘yicha rivojlanayotgan yosh dasturchiman.</p>
+</section>
+
+<!-- ===========================
+     SKILLS SECTION (premium)  <- PUT THIS ENTIRE SECTION (replace old one)
+     =========================== -->
+<section id="skills" class="fade-in">
+  <h2 style="color:var(--accent);">Ko'nikmalar</h2>
+  <p>O‘rganayotgan dasturlash texnologiyalarim:</p>
+
+  <div id="skillsContainer" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    
+    <div class="skill-bar" data-skill="HTML" data-level="90">
+      <div class="fill" aria-hidden="true"></div>
+      <span class="percent" aria-hidden="true">0%</span>
+      <div class="tooltip" aria-hidden="true">HTML: 90%</div>
+    </div>
+
+    <div class="skill-bar" data-skill="CSS" data-level="85">
+      <div class="fill" aria-hidden="true"></div>
+      <span class="percent" aria-hidden="true">0%</span>
+      <div class="tooltip" aria-hidden="true">CSS: 85%</div>
+    </div>
+
+    <div class="skill-bar" data-skill="JavaScript" data-level="75">
+      <div class="fill" aria-hidden="true"></div>
+      <span class="percent" aria-hidden="true">0%</span>
+      <div class="tooltip" aria-hidden="true">JavaScript: 75%</div>
+    </div>
+
+    <div class="skill-bar" data-skill="Python" data-level="70">
+      <div class="fill" aria-hidden="true"></div>
+      <span class="percent" aria-hidden="true">0%</span>
+      <div class="tooltip" aria-hidden="true">Python: 70%</div>
+    </div>
+
+    <div class="skill-bar" data-skill="GitHub" data-level="65">
+      <div class="fill" aria-hidden="true"></div>
+      <span class="percent" aria-hidden="true">0%</span>
+      <div class="tooltip" aria-hidden="true">GitHub: 65%</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===========================
+     ABOUT
+     =========================== -->
+<section id="about" class="fade-in" style="background:#f5f5f5; color:#000; border-radius:12px; max-width:850px; margin:auto;">
+  <h2 style="color:var(--accent);">Men haqimda</h2>
+  <p>
+    Salom! Men <strong>Samir Abdumo'minov</strong>, Sarvar o‘g‘li. Sirdaryo viloyati Shirin shahrida yashayman va Guliston Prezident maktabining 7-"Blue" sinf o‘quvchisiman.
+    Dasturlash, web texnologiyalar, sun’iy intellekt, robototexnika va 3D dizayn bilan shug‘ullanaman.
+    Kelajakda yetakchi dasturchi va dizayner bo‘lishni maqsad qilganman.
+  </p>
+</section>
+
+<!-- ===========================
+     PORTFOLIO
+     =========================== -->
+<section id="portfolio" class="fade-in">
+  <h2 style="text-shadow: 0 0 10px var(--accent);">Portfolio</h2>
+  <div class="portfolio-grid container">
+    <!-- Kalkulyator -->
+    <div class="project-card" data-demo="demo_cal.html" data-code="https://github.com/Samir20122025/portfolio-site/blob/main/demo_cal.html">
+      <img src="calculator.png" alt="Calculator Project">
+      <h3>Kalkulyator</h3>
+      <p>Oddiy arifmetik amallarni bajaruvchi web kalkulyator.</p>
+      <div class="project-links">
+        <a href="demo_cal.html" target="_self">Demo</a>
+        <a href="https://github.com/Samir20122025/portfolio-site/blob/main/demo_cal.html" target="_blank">Code</a>
+      </div>
+    </div>
+
+    <!-- Image generator -->
+    <div class="project-card" data-demo="https://youware.app/project/imgai-samir-j1yshold12?enter_from=share&invite_code=CM4JPUECY9" data-code="">
+      <img src="imgai.png" alt="Image generator AI Project">
+      <h3>Image generator AI</h3>
+      <p>Nano banana bilan ishlaydigan rasm yaratuvchi AI.</p>
+      <div class="project-links">
+        <a href="https://youware.app/project/imgai-samir-j1yshold12?enter_from=share&invite_code=CM4JPUECY9" target="_blank">Demo</a>
+      </div>
+    </div>
+
+    <!-- Mini game -->
+    <div class="project-card" data-demo="https://youware.app/project/fruitcollect-fhd2x8dvfl?enter_from=share&invite_code=CM4JPUECY9" data-code="https://github.com/Samir20122025/portfolio-site/blob/main/demo_game.html">
+      <img src="minigame.png" alt="Mini Game Project">
+      <h3>Mini O‘yin</h3>
+      <p>HTML, CSS va JavaScript yordamida tuzilgan kichik o‘yin.</p>
+      <div class="project-links">
+        <a href="https://youware.app/project/fruitcollect-fhd2x8dvfl?enter_from=share&invite_code=CM4JPUECY9" target="_blank">Demo</a>
+        <a href="https://github.com/Samir20122025/portfolio-site/blob/main/demo_game.html" target="_blank">Code</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     CONTACT
+     =========================== -->
+<section id="contact" class="fade-in">
+  <h2 style="color:var(--accent);">Bog‘lanish uchun</h2>
+  <p>Email: <a href="mailto:samirabdumominov@gmail.com" style="color:var(--accent);">samirabdumominov@gmail.com</a></p>
+  <p>GitHub: <a href="https://github.com/Samir20122025" target="_blank" style="color:var(--accent);">github.com/Samir20122025</a></p>
+</section>
+
+<!-- Portfolio modal container (added) -->
+<div id="portfolioModalOverlay" class="portfolio-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="portfolio-modal" role="document">
+    <button class="close-btn" aria-label="Close modal">✕</button>
+    <h3 id="modalTitle">Project Title</h3>
+    <img id="modalImage" src="" alt="">
+    <p id="modalDesc">Project description goes here...</p>
+    <div class="modal-actions" id="modalActions">
+      <!-- Demo / Code buttons injected here -->
+    </div>
+  </div>
+</div>
 
 <script>
+/* ===========================
+   Theme toggle (as before) + persisted choice
+   =========================== */
 const themeToggle = document.getElementById('themeToggle');
 
 themeToggle.addEventListener('click', () => {
@@ -300,87 +617,42 @@ if(savedTheme === 'light'){
 } else {
   themeToggle.textContent = '🌙';
 }
-</script>
 
-<section id="profile" class="fade-in">
-  <img src="Avatar.png" alt="Samir Abdumo'minov Profile Picture">
-  <h2>Samirbek</h2>
-  <p>Frontend va web texnologiyalar bo‘yicha rivojlanayotgan yosh dasturchiman.</p>
-</section>
+/* ===========================
+   Fade-in IntersectionObserver
+   =========================== */
+const faders = document.querySelectorAll('.fade-in');
 
-<section id="skills" class="fade-in">
-  <h2 style="color:#c400ff;">Ko'nikmalar</h2>
-  <p>O‘rganayotgan dasturlash texnologiyalarim:</p>
-  <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
-    <span style="border:1px solid #c400ff; padding:10px 20px; border-radius:8px;">HTML</span>
-    <span style="border:1px solid #c400ff; padding:10px 20px; border-radius:8px;">CSS</span>
-    <span style="border:1px solid #c400ff; padding:10px 20px; border-radius:8px;">JavaScript</span>
-    <span style="border:1px solid #c400ff; padding:10px 20px; border-radius:8px;">Python</span>
-    <span style="border:1px solid #c400ff; padding:10px 20px; border-radius:8px;">GitHub</span>
-  </div>
-</section>
+const appearOptions = {
+  threshold: 0.18,
+  rootMargin: "0px 0px -40px 0px"
+};
 
-<section id="about" class="fade-in" style="background:#f5f5f5; color:#000; border-radius:12px; max-width:850px; margin:auto;">
-  <h2 style="color:#c400ff;">Men haqimda</h2>
-  <p>
-    Salom! Men <strong>Samir Abdumo'minov</strong>, Sarvar o‘g‘li. Sirdaryo viloyati Shirin shahrida yashayman va Guliston Prezident maktabining 7-"Blue" sinf o‘quvchisiman.
-    Dasturlash, web texnologiyalar, sun’iy intellekt, robototexnika va 3D dizayn bilan shug‘ullanaman.
-    Kelajakda yetakchi dasturchi va dizayner bo‘lishni maqsad qilganman.
-  </p>
-</section>
+const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('show');
+    observer.unobserve(entry.target); // animate once
+  });
+}, appearOptions);
 
-<section id="portfolio" class="fade-in">
-  <h2 style="text-shadow: 0 0 10px #c400ff;">Portfolio</h2>
-  <div class="portfolio-grid">
-    <div class="project-card">
-      <img src="calculator.png" alt="Calculator Project">
-      <h3>Kalkulyator</h3>
-      <p>Oddiy arifmetik amallarni bajaruvchi web kalkulyator.</p>
-      <div class="project-links">
-        <a href="demo_cal.html" target="_self">Demo</a>
-        <a href="https://github.com/Samir20122025/portfolio-site/blob/main/demo_cal.html" target="_blank">Code</a>
-      </div>
-    </div>
+faders.forEach(fader => appearOnScroll.observe(fader));
 
-    <div class="project-card">
-      <img src="imgai.png" alt="AI Bot Project">
-      <h3>Image generator AI</h3>
-      <p>Nano banana bilan ishlaydigan rasm yaratuvchi AI</p>
-      <div class="project-links">
-        <a href="https://youware.app/project/imgai-samir-j1yshold12?enter_from=share&invite_code=CM4JPUECY9" target="_blank">Demo</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <img src="minigame.png" alt="Mini Game Project">
-      <h3>Mini O‘yin</h3>
-      <p>HTML, CSS va JavaScript yordamida tuzilgan kichik o‘yin.</p>
-      <div class="project-links">
-        <a href="https://youware.app/project/fruitcollect-fhd2x8dvfl?enter_from=share&invite_code=CM4JPUECY9" target="_blank">Demo</a>
-        <a href="https://github.com/Samir20122025/portfolio-site/blob/main/demo_game.html" target="_blank">Code</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="fade-in">
-  <h2 style="color:#c400ff;">Bog‘lanish uchun</h2>
-  <p>Email: <a href="mailto:samirabdumominov@gmail.com" style="color:#c400ff;">samirabdumominov@gmail.com</a></p>
-  <p>GitHub: <a href="https://github.com/Samir20122025" target="_blank" style="color:#c400ff;">github.com/Samir20122025</a></p>
-</section>
-
-<script>
+/* ===========================
+   Visitor modal: show on new browser session (not on refresh)
+   - Uses sessionStorage: stays during same tab/window session, cleared when user closes tab/window.
+   =========================== */
 (function(){
   const overlay = document.getElementById('visitorOverlay');
   const input = document.getElementById('visitorInput');
   const confirmBtn = document.getElementById('confirmBtn');
   const skipBtn = document.getElementById('skipBtn');
 
-  const SESSION_KEY = 'visitorSessionShown';
+  const SESSION_KEY = 'visitorSessionShown_v1';
 
   function showModal(){
     overlay.style.display = 'flex';
-    input.focus();
+    input && input.focus();
   }
 
   function closeModal(){
@@ -388,10 +660,10 @@ if(savedTheme === 'light'){
   }
 
   function confirmHandler(){
-    const text = input.value.trim();
+    const text = input && input.value ? input.value.trim() : '';
     const record = { text: text || null, at: new Date().toISOString(), ua: navigator.userAgent };
 
-    // 🔒 fetch xatosiga qarshi himoya
+    // fetch xatosiga qarshi himoya — server bo'lmasa ham sahifa ishlashda davom etadi
     try {
       fetch('/api/visitor', {
         method:'POST',
@@ -400,23 +672,170 @@ if(savedTheme === 'light'){
       }).catch(()=>{});
     } catch(e){}
 
-    sessionStorage.setItem(SESSION_KEY, '1'); // faqat shu sessiya uchun
+    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e){}
     closeModal();
   }
 
   function skipHandler(){
-    sessionStorage.setItem(SESSION_KEY, '1');
+    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e){}
     closeModal();
   }
 
-  confirmBtn.addEventListener('click', confirmHandler);
-  skipBtn.addEventListener('click', skipHandler);
+  if(confirmBtn) confirmBtn.addEventListener('click', confirmHandler);
+  if(skipBtn) skipBtn.addEventListener('click', skipHandler);
 
-  // ✅ Faqat yangi tashrifda (browser qayta ochilganda) chiqadi
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted && sessionStorage.getItem(SESSION_KEY)) {
+      closeModal();
+    }
+  });
+
   if(!sessionStorage.getItem(SESSION_KEY)){
     window.addEventListener('load', ()=> setTimeout(showModal, 300));
   } else {
     closeModal();
+  }
+})();
+
+/* ===========================
+   Portfolio modal logic
+   - shows image, title, description, and Demo / Code buttons (if present)
+   =========================== */
+(function(){
+  const portfolioCards = document.querySelectorAll('.project-card');
+  const modalOverlay = document.getElementById('portfolioModalOverlay');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalImage = document.getElementById('modalImage');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalActions = document.getElementById('modalActions');
+  const modalClose = modalOverlay ? modalOverlay.querySelector('.close-btn') : null;
+
+  if(!portfolioCards || portfolioCards.length === 0) return;
+
+  portfolioCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      // Prevent clicking on internal links inside the card from opening modal
+      if(e.target.tagName.toLowerCase() === 'a') return;
+
+      const title = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
+      const img = card.querySelector('img') ? card.querySelector('img').src : '';
+      const desc = card.querySelector('p') ? card.querySelector('p').textContent : '';
+      const demoLink = card.dataset.demo || '';
+      const codeLink = card.dataset.code || '';
+
+      modalTitle.textContent = title;
+      modalImage.src = img;
+      modalImage.alt = title;
+      modalDesc.textContent = desc;
+
+      // Clear actions, then add buttons if links exist
+      modalActions.innerHTML = '';
+      if(demoLink){
+        const a = document.createElement('a');
+        a.href = demoLink;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = 'Demo';
+        modalActions.appendChild(a);
+      }
+      if(codeLink){
+        const b = document.createElement('a');
+        b.href = codeLink;
+        b.target = '_blank';
+        b.rel = 'noopener';
+        b.textContent = 'Code';
+        modalActions.appendChild(b);
+      }
+
+      modalOverlay.style.display = 'flex';
+      // focus close button for accessibility
+      const closeBtn = modalOverlay.querySelector('.close-btn');
+      closeBtn && closeBtn.focus();
+    });
+  });
+
+  // Close handlers
+  modalClose && modalClose.addEventListener('click', () => {
+    modalOverlay.style.display = 'none';
+  });
+
+  modalOverlay && modalOverlay.addEventListener('click', e => {
+    if(e.target === modalOverlay) modalOverlay.style.display = 'none';
+  });
+
+  // Escape key closes modal
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') modalOverlay.style.display = 'none';
+  });
+})();
+
+/* ===========================
+   Skills progress bars: animate on entering viewport
+   - premium: gradient fill + percent counter
+   - robust: IntersectionObserver threshold low + load fallback
+   =========================== */
+(function(){
+  const skillBars = document.querySelectorAll('.skill-bar');
+  if(!skillBars.length) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const bar = entry.target;
+        const fill = bar.querySelector('.fill');
+        const percentEl = bar.querySelector('.percent');
+        const target = parseInt(bar.getAttribute('data-level')) || 70;
+        let current = 0;
+        // set width (CSS transition does the smooth fill)
+        fill.style.width = target + '%';
+        // reveal percent
+        percentEl.style.opacity = 1;
+
+        // animate number (0 -> target)
+        const stepTime = Math.max(8, Math.floor(900 / target)); // dynamic speed
+        const counter = setInterval(()=>{
+          current++;
+          percentEl.textContent = current + '%';
+          if(current >= target) clearInterval(counter);
+        }, stepTime);
+
+        observer.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  skillBars.forEach(bar => observer.observe(bar));
+
+  // fallback — if IntersectionObserver fails or bars still 0 width after load
+  window.addEventListener('load', ()=>{
+    skillBars.forEach(bar=>{
+      const fill = bar.querySelector('.fill');
+      const percentEl = bar.querySelector('.percent');
+      const target = parseInt(bar.getAttribute('data-level')) || 70;
+      // if still not animated, force it
+      if(fill && (fill.offsetWidth === 0 || getComputedStyle(fill).width === '0px')){
+        fill.style.width = target + '%';
+        percentEl.textContent = target + '%';
+        percentEl.style.opacity = 1;
+      }
+    });
+  });
+
+  // Also trigger on fade-in end (helps some mobile cases)
+  const skillsSection = document.querySelector('#skills');
+  if(skillsSection){
+    skillsSection.addEventListener('transitionend', ()=>{
+      skillBars.forEach(bar=>{
+        const fill = bar.querySelector('.fill');
+        const percentEl = bar.querySelector('.percent');
+        const target = parseInt(bar.getAttribute('data-level')) || 70;
+        if(fill && (fill.offsetWidth === 0 || getComputedStyle(fill).width === '0px')){
+          fill.style.width = target + '%';
+          percentEl.textContent = target + '%';
+          percentEl.style.opacity = 1;
+        }
+      });
+    });
   }
 })();
 </script>
