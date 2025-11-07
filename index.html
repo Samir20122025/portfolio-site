@@ -391,11 +391,14 @@ if(savedTheme === 'light'){
     const text = input.value.trim();
     const record = { text: text || null, at: new Date().toISOString(), ua: navigator.userAgent };
 
-    fetch('/api/visitor', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(record)
-    });
+    // 🔒 fetch xatosiga qarshi himoya
+    try {
+      fetch('/api/visitor', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(record)
+      }).catch(()=>{});
+    } catch(e){}
 
     localStorage.setItem(DISMISS_KEY, '1');
     closeModal();
@@ -415,8 +418,11 @@ if(savedTheme === 'light'){
     }
   });
 
+  // ⚡ Modal endi faqat birinchi marta kirganda chiqadi
   if(!localStorage.getItem(DISMISS_KEY)){
-    window.addEventListener('load', ()=>{ setTimeout(showModal, 300); });
+    window.addEventListener('load', ()=> setTimeout(showModal, 300));
+  } else {
+    closeModal();
   }
 })();
 </script>
