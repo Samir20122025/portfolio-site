@@ -376,7 +376,7 @@ if(savedTheme === 'light'){
   const confirmBtn = document.getElementById('confirmBtn');
   const skipBtn = document.getElementById('skipBtn');
 
-  const DISMISS_KEY = 'visitorAcknowledged_v1';
+  const SESSION_KEY = 'visitorSessionShown';
 
   function showModal(){
     overlay.style.display = 'flex';
@@ -400,26 +400,20 @@ if(savedTheme === 'light'){
       }).catch(()=>{});
     } catch(e){}
 
-    localStorage.setItem(DISMISS_KEY, '1');
+    sessionStorage.setItem(SESSION_KEY, '1'); // faqat shu sessiya uchun
     closeModal();
   }
 
   function skipHandler(){
-    localStorage.setItem(DISMISS_KEY, '1'); 
+    sessionStorage.setItem(SESSION_KEY, '1');
     closeModal();
   }
 
   confirmBtn.addEventListener('click', confirmHandler);
   skipBtn.addEventListener('click', skipHandler);
 
-  window.addEventListener("pageshow", (event) => {
-    if (event.persisted && localStorage.getItem(DISMISS_KEY)) {
-      closeModal();
-    }
-  });
-
-  // ⚡ Modal endi faqat birinchi marta kirganda chiqadi
-  if(!localStorage.getItem(DISMISS_KEY)){
+  // ✅ Faqat yangi tashrifda (browser qayta ochilganda) chiqadi
+  if(!sessionStorage.getItem(SESSION_KEY)){
     window.addEventListener('load', ()=> setTimeout(showModal, 300));
   } else {
     closeModal();
